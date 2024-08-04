@@ -4,7 +4,7 @@ import tensorflow as tf
 import keras
 from keras.models import Sequential
 from keras.layers import Dense
-
+from sklearn.metrics import confusion_matrix, accuracy_score
 
 previsores = pd.read_csv('datasets/entradas_breast.csv')
 classe = pd.read_csv('datasets/saidas_breast.csv')
@@ -25,3 +25,25 @@ clf = Sequential()
 #qtdeOculta = (30 + 1) / 2
 clf.add(Dense(units = 16, activation = 'relu',
               kernel_initializer = 'random_uniform', input_dim = 30))
+
+clf.add(Dense(units = 1, activation = 'sigmoid'))
+
+clf.compile(optimizer = 'adam', loss = 'binary_crossentropy',
+            metrics = ['binary_accuracy'])
+
+clf.fit(previsores_treinamento, classe_treinamento,
+        batch_size = 10, epochs = 100)
+
+previsoes = clf.predict(previsores_teste)
+previsoes = (previsoes > 0.5)
+precisao = accuracy_score(classe_teste, previsoes)
+print(precisao)
+
+matriz = confusion_matrix(classe_teste, previsoes)
+print(matriz)
+
+resultado = clf.evaluate(previsores_teste, classe_teste)
+print(resultado)
+
+
+
