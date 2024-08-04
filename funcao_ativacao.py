@@ -13,7 +13,7 @@ def sigmoidFunction(soma):
 def tanhFunction(soma):
     return (np.exp(soma) - np.exp(-soma)) / (np.exp(soma) + np.exp(-soma))
 
-def ReLU(soma):
+def relu(soma):
     if soma >= 0:
         return soma
     else:
@@ -29,7 +29,7 @@ def softmax(x):
 teste = print(stepFunction(-1))
 teste2 = print(sigmoidFunction(2.1))
 teste3 = print(tanhFunction(2.1))
-teste4 = print(ReLU(2.1))
+teste4 = print(relu(2.1))
 teste5 = print(linearFunction(2.1))
 valores = [7, 2, 1.3]
 print(softmax(valores))
