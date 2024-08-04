@@ -23,4 +23,5 @@ print(classe_teste.shape)
 
 clf = Sequential()
 #qtdeOculta = (30 + 1) / 2
-clf.add(Dense(units = 16, activation = 'relu'))
+clf.add(Dense(units = 16, activation = 'relu',
+              kernel_initializer = 'random_uniform', input_dim = 30))
