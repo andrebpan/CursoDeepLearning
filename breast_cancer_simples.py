@@ -25,25 +25,38 @@ clf = Sequential()
 #qtdeOculta = (30 + 1) / 2
 clf.add(Dense(units = 16, activation = 'relu',
               kernel_initializer = 'random_uniform', input_dim = 30))
+clf.add(Dense(units = 16, activation = 'relu', kernel_initializer = 'random_uniform'))
 
 clf.add(Dense(units = 1, activation = 'sigmoid'))
 
-clf.compile(optimizer = 'adam', loss = 'binary_crossentropy',
-            metrics = ['binary_accuracy'])
+otimizador = keras.optimizers.Adam(learning_rate = 0.001, decay = 0.0001, clipvalue = 0.5)
+clf.compile(optimizer = otimizador, loss = 'binary_crossentropy',
+          metrics = ['binary_accuracy'])
+
+#clf.compile(optimizer = 'adam', loss = 'binary_crossentropy',
+#           metrics = ['binary_accuracy'])
 
 clf.fit(previsores_treinamento, classe_treinamento,
         batch_size = 10, epochs = 100)
 
+pesos0 = clf.layers[0].get_weights()
+print(pesos0)
+print(len(pesos0))
+pesos1 = clf.layers[1].get_weights()
+pesos2 = clf.layers[2].get_weights()
+
+
+print("\nMetricas no conjunto de testes:")
 previsoes = clf.predict(previsores_teste)
 previsoes = (previsoes > 0.5)
 precisao = accuracy_score(classe_teste, previsoes)
-print(precisao)
+print(f"Acuracia teste = {precisao}")
 
 matriz = confusion_matrix(classe_teste, previsoes)
-print(matriz)
+print(f"Matriz de confusao = {matriz}")
 
 resultado = clf.evaluate(previsores_teste, classe_teste)
-print(resultado)
+print(f"Avaliacao = {resultado}")
 
 
 
