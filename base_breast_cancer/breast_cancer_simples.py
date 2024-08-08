@@ -6,8 +6,8 @@ from keras.models import Sequential
 from keras.layers import Dense
 from sklearn.metrics import confusion_matrix, accuracy_score
 
-previsores = pd.read_csv('datasets/entradas_breast.csv')
-classe = pd.read_csv('datasets/saidas_breast.csv')
+previsores = pd.read_csv('base_breast_cancer/datasets/entradas_breast.csv')
+classe = pd.read_csv('base_breast_cancer/datasets/saidas_breast.csv')
 
 print(previsores.head())
 print(classe.head())

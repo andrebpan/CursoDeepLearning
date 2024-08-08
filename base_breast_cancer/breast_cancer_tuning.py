@@ -1,14 +1,14 @@
 import pandas as pd
 import tensorflow as tf
 from tensorflow import keras
-from tensorflow.keras import layers, models
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Dropout
 from scikeras.wrappers import KerasClassifier
-from sklearn.model_selection import cross_val_score
+from sklearn.model_selection import GridSearchCV
 
-previsores = pd.read_csv('datasets/entradas_breast.csv')
-classe = pd.read_csv('datasets/saidas_breast.csv')
+
+previsores = pd.read_csv('base_breast_cancer/datasets/entradas_breast.csv')
+classe = pd.read_csv('base_breast_cancer/datasets/saidas_breast.csv')
 
 def criarRede():
     clf = Sequential()
@@ -30,13 +30,3 @@ def criarRede():
 
     return clf
 
-clf = KerasClassifier(build_fn=criarRede, epochs=100, batch_size=10)
-
-resultados = cross_val_score(estimator=clf, X=previsores, y=classe, cv=10, scoring='accuracy')
-print("\nResultados: ",resultados)
-
-media = resultados.mean()
-print("\nmedia dos resultados: ",media)
-
-desvio = resultados.std()
-print("Desvio padrao: ", desvio)
